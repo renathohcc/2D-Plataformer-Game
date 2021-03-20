@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Patrol : MonoBehaviour
+public class Patrol : Enemy
 {
     // Start is called before the first frame update
     public Transform[] patrolPoints;
@@ -13,8 +13,6 @@ public class Patrol : MonoBehaviour
     public float startWaitTime;
 
     Animator anim;
-
-    public int damage;
 
     void Start()
     {
@@ -60,11 +58,4 @@ public class Patrol : MonoBehaviour
         }
     }
 
-    //Function to detect when the player hits the enemy and apply damage
-    private void OnTriggerEnter2D(Collider2D collison)
-    {
-        if(collison.tag == "Player"){
-            collison.GetComponent<Player>().TakeDamage(damage);
-        }
-    }
 }
