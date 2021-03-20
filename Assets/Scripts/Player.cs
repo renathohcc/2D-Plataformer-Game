@@ -29,6 +29,15 @@ public class Player : MonoBehaviour
 
     public int health;
 
+    public float timeBetweenAttacks;
+    float nextAttackTime;
+
+    public Transform attackPoint;
+    public float attackRange;
+    public LayerMask enemyLayer;
+
+    public int damage;
+
     void Start()
     {
         //To start the Rigidbody2D component in the player gameObject;
@@ -40,6 +49,16 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //To make the player attack animation
+        if(Time.time > nextAttackTime){
+            if(Input.GetKey(KeyCode.Space)){
+
+                anim.SetTrigger("attack");
+                nextAttackTime = Time.time + timeBetweenAttacks;
+            }
+            
+        }
+
         //Player movement
         float input = Input.GetAxisRaw("Horizontal");
         rb.velocity = new Vector2 (input*speed, rb.velocity.y);
@@ -117,5 +136,21 @@ public class Player : MonoBehaviour
         if (health <= 0){
             Destroy(gameObject);
         }
+    }
+
+    //Function to see the attack range
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+    }
+
+    //Function to attack
+    public void Attack(){
+        Collider2D[] enemiesToDamage = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayer);
+                foreach (Collider2D col in enemiesToDamage)
+                {
+                    col.GetComponent<Enemy>().TakeDamage(damage);
+                }
     }
 }

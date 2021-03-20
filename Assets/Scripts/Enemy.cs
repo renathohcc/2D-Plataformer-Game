@@ -6,6 +6,7 @@ public class Enemy : MonoBehaviour
 {
     // Start is called before the first frame update
     public int damage;
+    public int health;
     void Start()
     {
         
@@ -22,6 +23,14 @@ public class Enemy : MonoBehaviour
     {
         if(collison.tag == "Player"){
             collison.GetComponent<Player>().TakeDamage(damage);
+        }
+    }
+
+    //Function to kill the enemy when his health is zero
+    public void TakeDamage(int damage){
+        health -= damage;
+        if(health <= 0){
+            Destroy(gameObject);
         }
     }
 }
