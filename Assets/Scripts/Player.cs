@@ -27,6 +27,8 @@ public class Player : MonoBehaviour
 
     Animator anim;
 
+    public int health;
+
     void Start()
     {
         //To start the Rigidbody2D component in the player gameObject;
@@ -106,5 +108,14 @@ public class Player : MonoBehaviour
     //Function to make the player back to slide after JumpWall
     void SetWallJumpingToFalse(){
         wallJumping = false;
+    }
+
+    //Function to make damage in the player (still working on that)
+    public void TakeDamage(int damage){
+        health -= damage;
+        print(health);
+        if (health <= 0){
+            Destroy(gameObject);
+        }
     }
 }
