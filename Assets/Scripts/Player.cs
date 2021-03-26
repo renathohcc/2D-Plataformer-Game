@@ -38,6 +38,8 @@ public class Player : MonoBehaviour
 
     public int damage;
 
+    public SpriteRenderer weaponRenderer;
+
     void Start()
     {
         //To start the Rigidbody2D component in the player gameObject;
@@ -152,5 +154,13 @@ public class Player : MonoBehaviour
                 {
                     col.GetComponent<Enemy>().TakeDamage(damage);
                 }
+    }
+
+    //Function to switch the player Weapon
+    public void Equip(Weapon weapon){
+        damage = weapon.damage;
+        attackRange = weapon.attackRange;
+        weaponRenderer.sprite = weapon.GXF;
+        Destroy(weapon.gameObject);
     }
 }
