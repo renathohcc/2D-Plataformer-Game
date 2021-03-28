@@ -42,12 +42,18 @@ public class Player : MonoBehaviour
 
     public GameObject blood;
 
+    AudioSource source;
+    public AudioClip jumpSound;
+    public AudioClip hurtSound;
+
     void Start()
     {
         //To start the Rigidbody2D component in the player gameObject;
         rb = GetComponent<Rigidbody2D>();
         //To start the animator component in the player gameObject;
         anim = GetComponent<Animator>();
+        //To start the audio source component in the player gameObject;
+        source = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -95,6 +101,9 @@ public class Player : MonoBehaviour
         //Make the player jump
         if(Input.GetKeyDown(KeyCode.UpArrow) && isGrounded == true){
             rb.velocity = Vector2.up * jumpForce;
+            //To play the jump sound
+            source.clip = jumpSound;
+            source.Play();
         }
 
         //Check if player is in the wall
@@ -119,6 +128,9 @@ public class Player : MonoBehaviour
 
         if(wallJumping == true){
             rb.velocity = new Vector2(xWallForce * -input, yWallForce);
+            //To play the jump sound
+            source.clip = jumpSound;
+            source.Play();
         }
 
 
@@ -137,6 +149,9 @@ public class Player : MonoBehaviour
     //Function to make damage in the player (still working on that)
     public void TakeDamage(int damage){
         FindObjectOfType<CameraShake>().Shake();
+        //To play the player hurt sound
+        source.clip = hurtSound;
+        source.Play();
         health -= damage;
         Instantiate(blood, transform.position, Quaternion.identity);
         print(health);
