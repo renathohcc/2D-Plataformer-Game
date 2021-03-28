@@ -40,6 +40,8 @@ public class Player : MonoBehaviour
 
     public SpriteRenderer weaponRenderer;
 
+    public GameObject blood;
+
     void Start()
     {
         //To start the Rigidbody2D component in the player gameObject;
@@ -136,6 +138,7 @@ public class Player : MonoBehaviour
     public void TakeDamage(int damage){
         FindObjectOfType<CameraShake>().Shake();
         health -= damage;
+        Instantiate(blood, transform.position, Quaternion.identity);
         print(health);
         if (health <= 0){
             Destroy(gameObject);
