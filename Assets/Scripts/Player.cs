@@ -55,6 +55,7 @@ public class Player : MonoBehaviour
         if(Time.time > nextAttackTime){
             if(Input.GetKey(KeyCode.Space)){
 
+                FindObjectOfType<CameraShake>().Shake();
                 anim.SetTrigger("attack");
                 nextAttackTime = Time.time + timeBetweenAttacks;
             }
@@ -133,6 +134,7 @@ public class Player : MonoBehaviour
 
     //Function to make damage in the player (still working on that)
     public void TakeDamage(int damage){
+        FindObjectOfType<CameraShake>().Shake();
         health -= damage;
         print(health);
         if (health <= 0){
